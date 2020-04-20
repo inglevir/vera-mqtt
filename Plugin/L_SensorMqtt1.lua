@@ -260,7 +260,7 @@ local function connectToMqtt()
 		end
 
 		-- Connect to broker, if possible
-		local result = mqttClient:connect(clientId, "Will_Topic/", 2, 1, "testament_msg")
+		local result = mqttClient:connect(clientId, "Will_Topic/", 2, 1, "VeraWill")
 		if ( result == nil ) then
 			log_info("Successfully connected to broker: " .. tostring(mqttServerIp) .. " on port " .. tostring(mqttServerPort))
 		else
@@ -548,6 +548,7 @@ function startup(lul_device)
 	end
 
 	-- "Generic I/O" device http://wiki.micasaverde.com/index.php/Luup_Device_Categories
+
 	luup.attr_set("category_num", 3, DEVICE_ID)
 
 	luup.variable_set(SERVICE_ID, "mqttServerConnected", "0", DEVICE_ID)
@@ -590,4 +591,6 @@ function startup(lul_device)
 	end
 
     luup.set_failure(false, DEVICE_ID)
+
+    publishMessage("/Nest/Vera/Vera/Startup", "{}")
 end
